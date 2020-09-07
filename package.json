@@ -1,0 +1,16 @@
+{
+	"name": "amp_jetson_sim",
+	"version": "1.0.0",
+	"description": "simulate the jetson-arduino serial communication for AMP go kart",
+	"main": "index.js",
+	"scripts": {},
+	"author": "Mitchell Arndt",
+	"license": "ISC",
+	"devDependencies": {
+		"serialport": "^9.0.1"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"socket.io": "^2.3.0"
+	}
+}
