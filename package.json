@@ -2,7 +2,7 @@
 	"name": "amp_jetson_sim",
 	"version": "1.0.0",
 	"description": "simulate the jetson-arduino serial communication for AMP go kart",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {},
 	"author": "Mitchell Arndt",
 	"license": "ISC",
