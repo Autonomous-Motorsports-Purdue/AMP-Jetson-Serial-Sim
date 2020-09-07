@@ -3,14 +3,21 @@
 	"version": "1.0.0",
 	"description": "simulate the jetson-arduino serial communication for AMP go kart",
 	"main": "server.js",
-	"scripts": {},
+	"scripts": {
+		"start": "node server.js",
+		"devStart": "nodemon server.js"
+	},
 	"author": "Mitchell Arndt",
 	"license": "ISC",
 	"devDependencies": {
+		"nodemon": "^2.0.4",
 		"serialport": "^9.0.1"
 	},
 	"dependencies": {
+		"body-parser": "^1.19.0",
+		"ejs": "^3.1.5",
 		"express": "^4.17.1",
+		"express-ejs-layouts": "^2.5.0",
 		"socket.io": "^2.3.0"
 	}
 }

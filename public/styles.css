@@ -1,0 +1,23 @@
+:root {
+	font-size: '20px';
+}
+
+html,
+body {
+	text-align: center;
+	align-items: center;
+	margin: auto;
+	margin-top: 2rem;
+}
+
+body::-webkit-scrollbar {
+	width: 0.25rem;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: var(--color-background-dark);
+}
+
+body::-webkit-scrollbar-track {
+	background: var(--color-background-light);
+}

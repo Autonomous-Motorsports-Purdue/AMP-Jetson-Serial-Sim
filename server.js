@@ -12,33 +12,22 @@
         to listen:
             cat -v < /dev/ttyS5
 */
-
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const app = express();
-const server = app.listen(3000);
 
+// routers
+const indexRouter = require('./routes/index');
+const bodyParser = require('body-parser');
+
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.set('layout', 'layouts/layout');
+app.use(expressLayouts);
 app.use(express.static('public'));
-console.log('My socket server is running');
+app.use(bodyParser.urlencoded({ limit: '1mb', extended: false }));
 
-const socket = require('socket.io');
-const io = socket(server);
-io.on('connection', newConnection);
-
-function newConnection(socket) {
-	console.log('new connection:' + socket.id);
-
-	socket.on('img', imgMsg);
-
-	function imgMsg(data) {
-		console.log('recieved: ');
-		console.log(data.string);
-		// console.log(data.array);
-		data.array.forEach((element) => {
-			console.log('sending: ' + element);
-			port.write(element.toString());
-		});
-	}
-}
+app.use('/', indexRouter);
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
@@ -57,7 +46,30 @@ const port = new SerialPort(
 const parser = new Readline();
 port.pipe(parser);
 
-parser.on('data', (line) => console.log(`> ${line}`));
-// > ROBOT ONLINE
+parser.on('data', (line) => console.log(`> ${line}`)); // > ROBOT ONLINE
 
-// setInterval(() => port.write("test"), 1000);
+app.listen(process.env.PORT || 3000);
+
+/** unused code */
+
+// const server = app.listen(process.env.PORT || 3000);
+
+// const socket = require('socket.io');
+// const io = socket(server);
+// io.on('connection', newConnection);
+
+// function newConnection(socket) {
+// 	console.log('new connection:' + socket.id);
+
+// 	socket.on('img', imgMsg);
+
+// 	function imgMsg(data) {
+// 		console.log('recieved: ');
+// 		console.log(data.string);
+// 		// console.log(data.array);
+// 		data.array.forEach((element) => {
+// 			console.log('sending: ' + element);
+// 			port.write(element.toString());
+// 		});
+// 	}
+// }
