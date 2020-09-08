@@ -6,7 +6,9 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/sendPress', (req, res) => {
-	console.log(req.body);
+	console.log(req.body.serial_CMD_String);
+	port.write(req.body.serial_CMD_String);
+	res.render('index');
 });
 
 router.post('/controlPress', (req, res) => {
