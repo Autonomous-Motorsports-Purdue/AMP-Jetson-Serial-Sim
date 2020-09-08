@@ -4,6 +4,14 @@ const router = express.Router();
 const SerialPort = require('serialport');
 const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
 
+port.on('open', function () {
+	console.log('port is opened');
+});
+
+port.on('data', function (data) {
+	console.log(`> ${data}`);
+});
+
 // const serial = new ser();
 
 router.get('/', async (req, res) => {
@@ -17,20 +25,22 @@ router.post('/connect', async (req, res) => {
 			res.redirect('/');
 		}
 	});
-	port.on('data', function (data) {
-		console.log(`> ${data}`);
-	});
+
 	res.redirect('/');
 });
 
 router.post('/disconnect', (req, res) => {
-	serial.disconnect();
+	console.log('no current functionality');
 	res.redirect('/');
 });
 
 router.post('/sendPress', (req, res) => {
-	if (port) console.log(req.body.serial_CMD_String);
-	serial.write(req.body.serial_CMD_String);
+	if (port.isOpen) {
+		console.log(req.body.serial_CMD_String);
+		port.write(req.body.serial_CMD_String);
+	} else {
+		console.log('port is not open');
+	}
 	res.redirect('/');
 });
 
