@@ -11,9 +11,10 @@ function Serial() {
 	this.serialResponse = '';
 
 	this.write = function (str) {
-		console.log(this.isConnected);
+		console.log(this.port);
 		if (this.isConnected) {
 			this.port.write(str);
+			console.log(`wrote: ${str}`);
 		} else {
 			console.log("tried to write to port that isn't connected");
 		}
@@ -29,8 +30,6 @@ function Serial() {
 			function (err) {
 				if (err == null) {
 					console.log('Connected to Serial Port');
-					this.isConnected = true;
-					console.log('here');
 				} else {
 					console.log(err);
 					this.isConnected = false;
@@ -38,6 +37,8 @@ function Serial() {
 			},
 			{ baudRate: this.baudRate }
 		);
+
+		this.isConnected = true;
 
 		this.parser = new Readline();
 		this.port.pipe(this.parser);
