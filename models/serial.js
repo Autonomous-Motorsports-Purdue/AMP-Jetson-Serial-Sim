@@ -2,7 +2,7 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 
 function Serial() {
-	this.isConnected = false;
+	this.isConnected;
 	this.portname = '/dev/ttyS6';
 	this.baudRate = 9600;
 	this.parser;
@@ -11,6 +11,7 @@ function Serial() {
 	this.serialResponse = '';
 
 	this.write = function (str) {
+		console.log(this.isConnected);
 		if (this.isConnected) {
 			this.port.write(str);
 		} else {
@@ -18,14 +19,21 @@ function Serial() {
 		}
 	};
 
-	this.connect = function () {
+	this.disconnect = function () {
+		console.log('no functionality currently');
+	};
+
+	this.connect = async function () {
 		this.port = new SerialPort(
 			this.portname,
 			function (err) {
 				if (err == null) {
 					console.log('Connected to Serial Port');
+					this.isConnected = true;
+					console.log('here');
 				} else {
 					console.log(err);
+					this.isConnected = false;
 				}
 			},
 			{ baudRate: this.baudRate }
@@ -36,7 +44,7 @@ function Serial() {
 
 		this.serialResponse = '>';
 
-		this.parser.on('data', (line) => (serialResponse += `> ${line}`));
+		this.parser.on('data', (line) => (this.serialResponse += `> ${line}`));
 	};
 }
 

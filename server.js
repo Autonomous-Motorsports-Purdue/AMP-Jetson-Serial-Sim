@@ -14,11 +14,7 @@
 */
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const ser = require('./models/serial.js');
 const app = express();
-
-let serial = new ser();
-serial.connect();
 
 // routers
 const indexRouter = require('./routes/index');
