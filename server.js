@@ -29,4 +29,4 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: false }));
 
 app.use('/', indexRouter);
 
-app.listen(process.env.PORT || 3000);
+global.server = app.listen(process.env.PORT || 3000);

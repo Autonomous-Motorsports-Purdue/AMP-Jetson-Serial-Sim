@@ -1,21 +1,31 @@
 const express = require('express');
 const router = express.Router();
-// const ser = require('../models/serial.js');
 const SerialPort = require('serialport');
 const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
+
+let serialIn = null;
+let serialInStr = '';
+
+function toHex(str) {
+	var result = '';
+	for (var i = 0; i < str.length; i++) {
+		result += str.charCodeAt(i).toString(16);
+	}
+	return result;
+}
 
 port.on('open', function () {
 	console.log('port is opened');
 });
 
 port.on('data', function (data) {
-	console.log(`> ${data}`);
+	serialInStr += data;
+	serialIn = toHex(serialInStr);
+	console.log(`> ${data}>${toHex(serialInStr)}`);
 });
 
-// const serial = new ser();
-
 router.get('/', async (req, res) => {
-	res.render('index');
+	res.render('index', { serialIn: serialIn });
 });
 
 router.post('/connect', async (req, res) => {
