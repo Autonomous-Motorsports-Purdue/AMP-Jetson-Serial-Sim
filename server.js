@@ -29,4 +29,14 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: false }));
 
 app.use('/', indexRouter);
 
-global.server = app.listen(process.env.PORT || 3000);
+server = app.listen(process.env.PORT || 3000);
+
+const socket = require('socket.io');
+const io = socket(server);
+
+io.on('connection', (socket) => {
+	console.log('a user connected');
+	socket.on('disconnect', () => {
+		console.log('user disconnected');
+	});
+});

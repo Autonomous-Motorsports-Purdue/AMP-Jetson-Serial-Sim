@@ -22,6 +22,7 @@ port.on('data', function (data) {
 	serialInStr += data;
 	serialIn = toHex(serialInStr);
 	console.log(`> ${data}>${toHex(serialInStr)}`);
+	socket.broadcast.emit('serialIn', serialInStr);
 });
 
 router.get('/', async (req, res) => {
