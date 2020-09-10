@@ -22,3 +22,7 @@ $('document').ready(function () {
 		$('#serialOut').val('control');
 	});
 });
+
+socket.on('serial_recieve', function (data) {
+	$('#serialIn').val($('#serialIn').val() + data);
+});

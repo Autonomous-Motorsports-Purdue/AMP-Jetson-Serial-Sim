@@ -19,11 +19,8 @@ const server = app.listen(8080);
 
 const SerialPort = require('serialport');
 const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
-
-port.on('data', function (data) {
-	//echo back
-	console.log(`> ${data}`);
-});
+const ByteLength = require('@serialport/parser-byte-length');
+const parser = port.pipe(new ByteLength({ length: 1 }));
 
 app.use(express.static('public'));
 
@@ -33,14 +30,22 @@ const io = socket(server);
 io.on('connection', function (socket) {
 	console.log('new connection:' + socket.id);
 
+	parser.on('data', function (data) {
+		//echo back
+		console.log(`> ${data.toString('hex')}`);
+
+		socket.emit('serial_recieve', data.toString('hex'));
+	});
+
 	socket.on('serial_connect', function () {
-		console.log('test recieved');
 		if (port.isOpen) {
 			console.log('Port is already open');
 		} else {
 			port.open(function (err) {
 				if (err) {
 					return console.log('Error opening port: ', err.message);
+				} else {
+					return console.log('port opened');
 				}
 			});
 		}
@@ -59,7 +64,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('serial_send', function (data) {
-		console.log(data);
+		console.log(`Requested Send: ${data}`);
 		if (port.isOpen) {
 			port.write(data);
 		} else {
