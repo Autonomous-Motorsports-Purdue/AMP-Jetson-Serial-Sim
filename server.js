@@ -35,8 +35,9 @@ const socket = require('socket.io');
 const io = socket(server);
 
 io.on('connection', (socket) => {
-	console.log('a user connected');
+	console.log(`new connection: ${socket.id}`);
 	socket.on('disconnect', () => {
-		console.log('user disconnected');
+		console.log(`${socket.id} disconnected`);
 	});
+	socket.emit('test', 'testvalue');
 });
