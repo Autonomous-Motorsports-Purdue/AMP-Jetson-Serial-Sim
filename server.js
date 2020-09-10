@@ -15,7 +15,7 @@
 
 const express = require('express');
 const app = express();
-const server = app.listen(3000);
+const server = app.listen(8080);
 
 app.use(express.static('public'));
 console.log('My socket server is running');
@@ -55,17 +55,9 @@ io.on('connection', newConnection);
 function newConnection(socket) {
 	console.log('new connection:' + socket.id);
 
-	socket.on('img', imgMsg);
-
-	function imgMsg(data) {
-		console.log('recieved: ');
-		console.log(data.string);
-		// console.log(data.array);
-		data.array.forEach((element) => {
-			console.log('sending: ' + element);
-			port.write(element.toString());
-		});
-	}
+	socket.on('connect', function () {
+		console.log('test recieved');
+	});
 }
 
 const SerialPort = require('serialport');
