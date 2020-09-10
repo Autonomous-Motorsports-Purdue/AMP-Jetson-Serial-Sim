@@ -3,6 +3,6 @@ socket = io();
 
 $('document').ready(function () {
 	$('#connect').click(function () {
-		socket.emit('connect');
+		socket.emit('serial_connect');
 	});
 });

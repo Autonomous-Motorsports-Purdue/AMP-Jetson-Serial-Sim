@@ -18,66 +18,21 @@ const app = express();
 const server = app.listen(8080);
 
 app.use(express.static('public'));
-console.log('My socket server is running');
 
 const socket = require('socket.io');
 const io = socket(server);
-io.on('connection', newConnection);
-
-// const SerialPort = require("serialport");
-// const port = new SerialPort(
-// 	"/dev/ttyS7",
-// 	{
-// 		BaudRate: 9600,
-// 	},
-// 	false //this is the openImmediately flag [default is true]
-// );
-
-// port.on("error", function (err) {
-// 	console.log("mitch error");
-// });
-
-// port.open(function (err) {
-// 	if (err) {
-// 		console.log(err);
-// 		return;
-// 	}
-// 	console.log("open");
-// 	port.on("data", function (data) {
-// 		console.log("data recieved: " + data);
-// 	});
-// 	port.write("ls\n", function (err, results) {
-// 		console.log("err" + err);
-// 		console.log("results " + results);
-// 	});
-// });
-
-function newConnection(socket) {
+io.on('connection', function (socket) {
 	console.log('new connection:' + socket.id);
 
-	socket.on('connect', function () {
+	socket.on('serial_connect', function () {
 		console.log('test recieved');
+		port.open(function (err) {
+			if (err) {
+				return console.log('Error opening port: ', err.message);
+			}
+		});
 	});
-}
+});
 
 const SerialPort = require('serialport');
-const Readline = require('@serialport/parser-readline');
-const port = new SerialPort(
-	'/dev/ttyS6',
-	function (err) {
-		if (err == null) {
-			console.log('Connected to Serial Port');
-		} else {
-			console.log(err);
-		}
-	},
-	{ baudRate: 9600 }
-);
-
-const parser = new Readline();
-port.pipe(parser);
-
-parser.on('data', (line) => console.log(`> ${line}`));
-// > ROBOT ONLINE
-
-// setInterval(() => port.write("test"), 1000);
+const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
