@@ -26,11 +26,27 @@ io.on('connection', function (socket) {
 
 	socket.on('serial_connect', function () {
 		console.log('test recieved');
-		port.open(function (err) {
-			if (err) {
-				return console.log('Error opening port: ', err.message);
-			}
-		});
+		if (port.isOpen) {
+			console.log('Port is already open');
+		} else {
+			port.open(function (err) {
+				if (err) {
+					return console.log('Error opening port: ', err.message);
+				}
+			});
+		}
+	});
+
+	socket.on('serial_disconnect', function () {
+		if (port.isOpen) {
+			port.close(function (err) {
+				if (err) {
+					return console.log('Error closing port: ', err.message);
+				}
+			});
+		} else {
+			console.log('Port is not open');
+		}
 	});
 });
 
