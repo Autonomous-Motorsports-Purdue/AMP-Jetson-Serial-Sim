@@ -9,4 +9,16 @@ $('document').ready(function () {
 	$('#disconnect').click(function () {
 		socket.emit('serial_disconnect');
 	});
+
+	$('#send').click(function () {
+		socket.emit('serial_send', $('#serialOut').val());
+	});
+
+	$('#enable').click(function () {
+		$('#serialOut').val('enable');
+	});
+
+	$('#control').click(function () {
+		$('#serialOut').val('control');
+	});
 });

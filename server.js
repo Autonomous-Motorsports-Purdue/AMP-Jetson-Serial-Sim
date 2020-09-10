@@ -48,6 +48,15 @@ io.on('connection', function (socket) {
 			console.log('Port is not open');
 		}
 	});
+
+	socket.on('serial_send', function (data) {
+		console.log(data);
+		if (port.isOpen) {
+			console.log('sending data');
+		} else {
+			console.log('Cannot write Serial. Port is not open');
+		}
+	});
 });
 
 const SerialPort = require('serialport');
