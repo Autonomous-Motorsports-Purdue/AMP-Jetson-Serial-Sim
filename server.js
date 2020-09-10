@@ -17,10 +17,19 @@ const express = require('express');
 const app = express();
 const server = app.listen(8080);
 
+const SerialPort = require('serialport');
+const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
+
+port.on('data', function (data) {
+	//echo back
+	console.log(`> ${data}`);
+});
+
 app.use(express.static('public'));
 
 const socket = require('socket.io');
 const io = socket(server);
+
 io.on('connection', function (socket) {
 	console.log('new connection:' + socket.id);
 
@@ -52,12 +61,9 @@ io.on('connection', function (socket) {
 	socket.on('serial_send', function (data) {
 		console.log(data);
 		if (port.isOpen) {
-			console.log('sending data');
+			port.write(data);
 		} else {
 			console.log('Cannot write Serial. Port is not open');
 		}
 	});
 });
-
-const SerialPort = require('serialport');
-const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
