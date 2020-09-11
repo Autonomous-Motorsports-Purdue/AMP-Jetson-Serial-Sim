@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 		<script
 			src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -36,7 +34,49 @@
 		</div>
 		<div>
 			<button id="enable">Enable</button>
-			<button id="control">Control</button>
+			<div>
+				<button id="control">Control</button>
+				<div>
+					<label>Brake Control</label>
+					<input
+						type="range"
+						id="brake"
+						min="0"
+						max="255"
+						value="0"
+						oninput="document.getElementById('brake_label').innerHTML = this.value"
+					/>
+					<label id="brake_label">0</label>
+				</div>
+
+				<div>
+					<label>Throttle Control</label>
+					<input
+						type="range"
+						id="throttle"
+						min="0"
+						max="255"
+						value="0"
+						oninput="document.getElementById('throttle_label').innerHTML = this.value"
+					/>
+					<label id="throttle_label">0</label>
+				</div>
+
+				<div>
+					<label>Steering Control</label>
+					<input
+						type="range"
+						id="steering"
+						min="0"
+						max="255"
+						value="0"
+						oninput="document.getElementById('steering_label').innerHTML = this.value"
+					/>
+					<label id="steering_label">0</label>
+				</div>
+
+				
+
 			<button id="clear">Clear</button>
 		</div>
 		<div>

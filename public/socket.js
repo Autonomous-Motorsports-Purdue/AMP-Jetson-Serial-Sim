@@ -4,7 +4,47 @@ socket = io();
 const serial_start = '02';
 const serial_stop = '03';
 const serial_id_enable = 'f0';
-const serial_enable_str = serial_start + serial_id_enable + serial_stop;
+const serial_id_control = 'f1';
+const serial_id_data_len_1 = 'e1';
+const serial_id_data_len_2 = 'e2';
+const serial_id_data_len_3 = 'e3';
+
+function serialBuilder() {
+	let builder = serial_start;
+	let crc = parseInt(serial_start);
+
+	for (let i = 0; i < arguments.length; i++) {
+		builder += arguments[i];
+		crc += parseInt(arguments[i], 16);
+	}
+
+	builder += numToHexStr(crc);
+	builder += serial_stop;
+
+	return builder;
+}
+
+const serial_enable_str = serialBuilder(serial_id_enable);
+
+function numToHexStr(num) {
+	let hex = num.toString(16);
+
+	if (hex.length > 2) {
+		let len = hex.length;
+
+		hex = hex.substring(len - 2, len);
+	} else {
+		while (hex.length < 2) {
+			hex = '0' + hex;
+		}
+	}
+
+	if (hex.length % 2) {
+		console.error('Something went wrong with str2Hex');
+	}
+
+	return hex;
+}
 
 $('document').ready(function () {
 	$('#connect').click(function () {
@@ -24,7 +64,14 @@ $('document').ready(function () {
 	});
 
 	$('#control').click(function () {
-		$('#serialOut').val('control');
+		const control = serialBuilder(
+			serial_id_control,
+			serial_id_data_len_3,
+			numToHexStr($('#brake').val()),
+			numToHexStr($('#throttle').val()),
+			numToHexStr($('#steering').val())
+		);
+		$('#serialOut').val(control);
 	});
 
 	$('#clear').click(function () {
