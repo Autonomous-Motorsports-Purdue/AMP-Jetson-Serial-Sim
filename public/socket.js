@@ -1,6 +1,8 @@
 let socket;
 socket = io();
 
+const serial_enable_str = '02f003';
+
 $('document').ready(function () {
 	$('#connect').click(function () {
 		socket.emit('serial_connect');
@@ -15,7 +17,7 @@ $('document').ready(function () {
 	});
 
 	$('#enable').click(function () {
-		$('#serialOut').val('enable');
+		$('#serialOut').val(serial_enable_str);
 	});
 
 	$('#control').click(function () {
