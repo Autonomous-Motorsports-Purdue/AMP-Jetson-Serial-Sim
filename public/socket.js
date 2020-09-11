@@ -64,13 +64,43 @@ $('document').ready(function () {
 	});
 
 	$('#control').click(function () {
-		const control = serialBuilder(
-			serial_id_control,
-			serial_id_data_len_3,
-			numToHexStr(parseInt($('#brake').val())),
-			numToHexStr(parseInt($('#throttle').val())),
-			numToHexStr(parseInt($('#steering').val()))
-		);
+		let control = 'default';
+
+		const data_len = $('#data_length').val();
+
+		const steering = numToHexStr(parseInt($('#steering').val()));
+
+		if (data_len == 1) {
+			control = serialBuilder(
+				serial_id_control,
+				serial_id_data_len_1,
+				steering
+			);
+		}
+
+		const throttle = numToHexStr(parseInt($('#throttle').val()));
+
+		if (data_len == 2) {
+			control = serialBuilder(
+				serial_id_control,
+				serial_id_data_len_2,
+				throttle,
+				steering
+			);
+		}
+
+		const brake = numToHexStr(parseInt($('#brake').val()));
+
+		if (data_len == 3) {
+			control = serialBuilder(
+				serial_id_control,
+				serial_id_data_len_3,
+				brake,
+				throttle,
+				steering
+			);
+		}
+
 		$('#serialOut').val(control);
 	});
 
@@ -102,3 +132,23 @@ socket.on('serial_disconnect_error', function (msg) {
 socket.on('serial_disconnect_success', function (msg) {
 	$('#terminal').val($('#terminal').val() + msg + '\n');
 });
+
+function data_length_callback(val) {
+	const data_length_label = document.getElementById('data_length_label');
+	data_length_label.innerHTML = val;
+
+	const brake = document.getElementById('brake');
+	const throttle = document.getElementById('throttle');
+
+	if (val <= 2) {
+		brake.disabled = true;
+	} else {
+		brake.disabled = false;
+	}
+
+	if (val <= 1) {
+		throttle.disabled = true;
+	} else {
+		throttle.disabled = false;
+	}
+}

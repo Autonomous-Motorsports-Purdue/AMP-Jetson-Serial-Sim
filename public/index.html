@@ -35,48 +35,51 @@
 		<div>
 			<button id="enable">Enable</button>
 			<div>
-				<button id="control">Control</button>
 				<div>
-					<label>Brake Control</label>
-					<input
-						type="range"
-						id="brake"
-						min="0"
-						max="255"
-						value="0"
-						oninput="document.getElementById('brake_label').innerHTML = this.value"
-					/>
-					<label id="brake_label">0</label>
-				</div>
+					<button id="control">Control</button>
+					<div>
+						<label>Brake Control</label>
+						<input
+							type="range"
+							id="brake"
+							min="0"
+							max="255"
+							value="0"
+							oninput="document.getElementById('brake_label').innerHTML = this.value"
+						/>
+						<label id="brake_label">0</label>
+					</div>
+					<div>
+						<label>Throttle Control</label>
+						<input
+							type="range"
+							id="throttle"
+							min="0"
+							max="255"
+							value="0"
+							oninput="document.getElementById('throttle_label').innerHTML = this.value"
+						/>
+						<label id="throttle_label">0</label>
+					</div>
+					<div>
+						<label>Steering Control</label>
+						<input
+							type="range"
+							id="steering"
+							min="0"
+							max="255"
+							value="0"
+							oninput="document.getElementById('steering_label').innerHTML = this.value"
+						/>
+						<label id="steering_label">0</label>
+					</div>
+					<div>
+						<label>Data Length</label>
+						<input type="range" id="data_length" min="1" max="3" value="3" oninput="data_length_callback(this.value)">
+						<label id="data_length_label">3</label>
+					</div>
 
-				<div>
-					<label>Throttle Control</label>
-					<input
-						type="range"
-						id="throttle"
-						min="0"
-						max="255"
-						value="0"
-						oninput="document.getElementById('throttle_label').innerHTML = this.value"
-					/>
-					<label id="throttle_label">0</label>
-				</div>
-
-				<div>
-					<label>Steering Control</label>
-					<input
-						type="range"
-						id="steering"
-						min="0"
-						max="255"
-						value="0"
-						oninput="document.getElementById('steering_label').innerHTML = this.value"
-					/>
-					<label id="steering_label">0</label>
-				</div>
-
-				
-
+				</div>	
 			<button id="clear">Clear</button>
 		</div>
 		<div>
