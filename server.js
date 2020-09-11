@@ -46,11 +46,17 @@ io.on('connection', function (socket) {
 	socket.on('serial_connect', function () {
 		if (port.isOpen) {
 			console.log('Port is already open');
+			socket.emit('serial_connect_error', 'Port is already open');
 		} else {
 			port.open(function (err) {
 				if (err) {
-					return console.log('Error opening port: ', err.message);
+					socket.emit(
+						'serial_connect_error',
+						`Error opening port: ${err.message}`
+					);
+					return console.log(`Error opening port: ${err.message}`);
 				} else {
+					socket.emit('serial_connect_success', 'port openeed');
 					return console.log('port opened');
 				}
 			});
@@ -61,10 +67,18 @@ io.on('connection', function (socket) {
 		if (port.isOpen) {
 			port.close(function (err) {
 				if (err) {
-					return console.log('Error closing port: ', err.message);
+					socket.emit(
+						'serial_disconnect_error',
+						`Error closing port: ${err.message}`
+					);
+					return console.log(`Error closing port: ${err.message}`);
+				} else {
+					socket.emit('serial_disconnect_success', 'port disconnected');
+					console.log('port disconnected');
 				}
 			});
 		} else {
+			socket.emit('serial_disconnect_error', 'Port is not open');
 			console.log('Port is not open');
 		}
 	});
