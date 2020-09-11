@@ -21,6 +21,7 @@ const SerialPort = require('serialport');
 const port = new SerialPort('/dev/ttyS6', { autoOpen: false });
 const ByteLength = require('@serialport/parser-byte-length');
 const parser = port.pipe(new ByteLength({ length: 1 }));
+const serial = require('./serial.js');
 
 app.use(express.static('public'));
 
@@ -33,6 +34,10 @@ io.on('connection', function (socket) {
 	parser.on('data', function (data) {
 		//echo back
 		console.log(`> ${data.toString('hex')}`);
+
+		if (serial.start.equals(data)) {
+			console.log('here');
+		}
 
 		socket.emit('serial_recieve', data.toString('hex'));
 	});
