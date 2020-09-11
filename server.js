@@ -35,11 +35,12 @@ io.on('connection', function (socket) {
 		//echo back
 		console.log(`> ${data.toString('hex')}`);
 
-		// if (serial.start.equals(data)) {
-		// 	console.log('here');
-		// }
-
 		socket.emit('serial_recieve', data.toString('hex'));
+
+		if (serial.stop.equals(data)) {
+			console.log('stop');
+			socket.emit('serialIn_linebreak');
+		}
 	});
 
 	socket.on('serial_connect', function () {
@@ -68,12 +69,10 @@ io.on('connection', function (socket) {
 		}
 	});
 
-	socket.on('serial_send', function (data) {
-		console.log(`Requested Send: ${data}`);
+	socket.on('serial_send', function (str) {
+		console.log(`Requested Send: ${str}`);
 		if (port.isOpen) {
-			let temp = Buffer.from(data, 'hex');
-			console.log(temp);
-			port.write(temp);
+			port.write(Buffer.from(str, 'hex'));
 		} else {
 			console.log('Cannot write Serial. Port is not open');
 		}

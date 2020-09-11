@@ -1,7 +1,9 @@
 let socket;
 socket = io();
 
-const serial_enable_str = '02f003';
+const serial_start = '02';
+const serial_stop = '03';
+const serial_id_enable = 'f0';
 
 $('document').ready(function () {
 	$('#connect').click(function () {
@@ -23,8 +25,16 @@ $('document').ready(function () {
 	$('#control').click(function () {
 		$('#serialOut').val('control');
 	});
+
+	$('#clear').click(function () {
+		$('#serialIn').val('');
+	});
 });
 
 socket.on('serial_recieve', function (data) {
 	$('#serialIn').val($('#serialIn').val() + data);
+});
+
+socket.on('serialIn_linebreak', function () {
+	$('#serialIn').val($('#serialIn').val() + '\n');
 });
