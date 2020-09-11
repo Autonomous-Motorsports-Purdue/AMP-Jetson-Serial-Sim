@@ -67,9 +67,9 @@ $('document').ready(function () {
 		const control = serialBuilder(
 			serial_id_control,
 			serial_id_data_len_3,
-			numToHexStr($('#brake').val()),
-			numToHexStr($('#throttle').val()),
-			numToHexStr($('#steering').val())
+			numToHexStr(parseInt($('#brake').val())),
+			numToHexStr(parseInt($('#throttle').val())),
+			numToHexStr(parseInt($('#steering').val()))
 		);
 		$('#serialOut').val(control);
 	});
