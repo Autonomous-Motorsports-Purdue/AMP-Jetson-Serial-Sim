@@ -28,11 +28,10 @@ function SerialPkt() {
 		this.data = [];
 		this.crc = null;
 		this.parsed = null;
-		this.end = false;
+		this.stop = false;
 	};
 
 	this.addbyte = function (byte) {
-		console.log(byte);
 		let res;
 		if (this.start == false) {
 			res = this.getStart(byte);
@@ -51,7 +50,6 @@ function SerialPkt() {
 		if (res != true) {
 			console.log('Error during Parsing: ', res);
 			this.reset();
-			console.log('parser reset');
 		}
 	};
 
@@ -120,14 +118,12 @@ function SerialPkt() {
 			let res;
 			if (this.id == enable_ack || this.id == kill_ack) {
 				res = this.id;
-				this.reset();
 			} else if (this.id == control_ack) {
 				res = `${this.id} [${this.data}]`;
-				this.reset();
 			} else {
-				this.reset();
 				return 'parser err';
 			}
+			this.reset();
 			return res;
 		} else {
 			return '';

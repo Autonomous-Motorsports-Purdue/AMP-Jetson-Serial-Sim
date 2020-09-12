@@ -178,5 +178,4 @@ function data_length_callback(val) {
 function continousControl() {
 	$('#control').click();
 	$('#send').click();
-	console.log('update');
 }
