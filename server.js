@@ -56,7 +56,7 @@ io.on('connection', function (socket) {
 					);
 					return console.log(`Error opening port: ${err.message}`);
 				} else {
-					socket.emit('serial_connect_success', 'port openeed');
+					socket.emit('serial_connect_success', 'port opened');
 					return console.log('port opened');
 				}
 			});

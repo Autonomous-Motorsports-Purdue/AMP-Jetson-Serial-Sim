@@ -3,13 +3,12 @@ socket = io();
 
 let update; //control update var
 
-const serial_start = '02';
-const serial_stop = '03';
-const serial_id_enable = 'f0';
-const serial_id_control = 'f1';
-const serial_id_data_len_1 = 'e1';
-const serial_id_data_len_2 = 'e2';
-const serial_id_data_len_3 = 'e3';
+const pkt = new SerialPkt();
+
+const kart_idle_ack = 'a0';
+const kart_enable_ack = 'a1';
+const kart_error_ack = 'a2';
+const kart_ctrl_ack = 'a3';
 
 function serialBuilder() {
 	let builder = serial_start;
@@ -130,6 +129,10 @@ $('document').ready(function () {
 
 socket.on('serial_recieve', function (data) {
 	$('#serialIn').val($('#serialIn').val() + data);
+
+	pkt.addbyte(data);
+
+	$('#cmdIn').val($('#cmdIn').val() + pkt.getParsedPkt());
 });
 
 socket.on('serialIn_linebreak', function () {
