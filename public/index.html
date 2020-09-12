@@ -26,17 +26,22 @@
 				<label>Serial Output</label>
 				<textarea id="serialOut"></textarea>
 				<button id="send">Send</button>
+				<button id="flush">Flush</button>
 			</div>
 			<div>
 				<label>Serial In</label>
-				<textarea id="serialIn"></textarea>
+				<textarea readonly id="serialIn"></textarea>
 			</div>
 		</div>
 		<div>
-			<button id="enable">Enable</button>
+			<button id="clear">Clear</button>
+			
 			<div>
+				<button id="enable">Enable</button>
 				<div>
 					<button id="control">Control</button>
+					<label>Continuous Control</label>
+					<input type="checkbox" id="continuous_control">
 					<div>
 						<label>Brake Control</label>
 						<input
@@ -80,11 +85,10 @@
 					</div>
 
 				</div>	
-			<button id="clear">Clear</button>
 		</div>
 		<div>
 			<label>Terminal</label>
-			<textarea id="terminal"></textarea>
+			<textarea readonly id="terminal"></textarea>
 		</div>
 	</body>
 </html>

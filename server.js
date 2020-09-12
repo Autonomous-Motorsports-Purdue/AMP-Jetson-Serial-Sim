@@ -91,4 +91,18 @@ io.on('connection', function (socket) {
 			console.log('Cannot write Serial. Port is not open');
 		}
 	});
+
+	socket.on('serial_flush', function () {
+		if (port.isOpen) {
+			port.flush(function (err) {
+				if (err) {
+					console.log('Error Flushing the Serial');
+				} else {
+					console.log('serial flushed');
+				}
+			});
+		} else {
+			console.log('port is not open');
+		}
+	});
 });

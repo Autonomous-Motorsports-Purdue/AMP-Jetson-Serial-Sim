@@ -1,6 +1,8 @@
 let socket;
 socket = io();
 
+let update; //control update var
+
 const serial_start = '02';
 const serial_stop = '03';
 const serial_id_enable = 'f0';
@@ -56,7 +58,15 @@ $('document').ready(function () {
 	});
 
 	$('#send').click(function () {
-		socket.emit('serial_send', $('#serialOut').val());
+		const out = $('#serialOut').val();
+		if (out == '') {
+			return;
+		}
+		socket.emit('serial_send', out);
+	});
+
+	$('#flush').click(function () {
+		socket.emit('serial_flush');
 	});
 
 	$('#enable').click(function () {
@@ -102,6 +112,15 @@ $('document').ready(function () {
 		}
 
 		$('#serialOut').val(control);
+	});
+
+	$('#continuous_control').click(function () {
+		if ($(this).prop('checked')) {
+			continousControl();
+			update = setInterval(continousControl, 500);
+		} else {
+			clearInterval(update);
+		}
 	});
 
 	$('#clear').click(function () {
@@ -151,4 +170,10 @@ function data_length_callback(val) {
 	} else {
 		throttle.disabled = false;
 	}
+}
+
+function continousControl() {
+	$('#control').click();
+	$('#send').click();
+	console.log('update');
 }
