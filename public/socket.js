@@ -48,13 +48,11 @@ function numToHexStr(num) {
 }
 
 $('document').ready(function () {
-	$('#connect').click(function () {
-		socket.emit('serial_connect');
-	});
+	disconnectedCallback(); //init to disconnected
 
-	$('#disconnect').click(function () {
-		socket.emit('serial_disconnect');
-	});
+	$('#connect').click(connectedCallback);
+
+	$('#disconnect').click(disconnectedCallback);
 
 	$('#send').click(function () {
 		const out = $('#serialOut').val();
@@ -155,6 +153,10 @@ socket.on('serial_disconnect_success', function (msg) {
 	$('#terminal').val($('#terminal').val() + msg + '\n');
 });
 
+socket.on('serial_error', function (msg) {
+	$('#terminal').val($('#terminal').val() + msg + '\n');
+});
+
 function data_length_callback(val) {
 	const data_length_label = document.getElementById('data_length_label');
 	data_length_label.innerHTML = val;
@@ -178,4 +180,29 @@ function data_length_callback(val) {
 function continousControl() {
 	$('#control').click();
 	$('#send').click();
+}
+
+function connectedCallback() {
+	socket.emit('serial_connect');
+	$('#send').prop('disabled', false);
+	$('#flush').prop('disabled', false);
+	$('#serialIn').prop('disabled', false);
+	$('#cmdIn').prop('disabled', false);
+	$('#clear').prop('disabled', false);
+	$('#continuous_control').prop('disabled', false);
+
+	console.log('connected');
+}
+
+function disconnectedCallback() {
+	socket.emit('serial_disconnect');
+
+	$('#send').prop('disabled', true);
+	$('#flush').prop('disabled', true);
+	$('#continuous_control').prop('disabled', true);
+	$('#serialIn').prop('disabled', true);
+	$('#cmdIn').prop('disabled', true);
+	$('#clear').prop('disabled', true);
+
+	console.log('disconnected');
 }

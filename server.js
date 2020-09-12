@@ -43,6 +43,11 @@ io.on('connection', function (socket) {
 		}
 	});
 
+	parser.on('error', function (err) {
+		socket.emit('serial_error', `Serial Error: ${err.message}`);
+		console.log(`Serial Error: ${err.message}`);
+	});
+
 	socket.on('serial_connect', function () {
 		if (port.isOpen) {
 			console.log('Port is already open');
