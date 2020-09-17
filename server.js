@@ -15,7 +15,7 @@
 
 const express = require('express');
 const app = express();
-const server = app.listen(8080);
+const server = app.listen(3000);
 
 const SerialPort = require('serialport');
 const port = new SerialPort('/dev/ttyS6', { autoOpen: false });

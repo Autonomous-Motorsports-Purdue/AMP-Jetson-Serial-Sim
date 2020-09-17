@@ -17,34 +17,51 @@
 	</head>
 	<body>
 		<h1>Jetson UART Simulator</h1>
-		<h2>by: Mitch Arndt</h2>
+		<div class="container">
+			<button id="connect">Connect</button>
+			<button id="disconnect">Disconnect</button>
 
-		<button id="connect">Connect</button>
-		<button id="disconnect">Disconnect</button>
+			<div class="colContainer">
+				<div class="serialOutput">
+					<div>
+						<label>Serial Output</label>
+					</div>
+					<div>
+						<textarea id="serialOut"></textarea>
+					</div>
+					<div>
+						<button id="send">Send</button>
+						<button id="flush">Flush</button>
+					</div>
+				</div>
 
-		<div>
-			<div>
-				<label>Serial Output</label>
-				<textarea id="serialOut"></textarea>
-				<button id="send">Send</button>
-				<button id="flush">Flush</button>
-			</div>
-			<div>
-				<label>Serial In</label>
-				<textarea readonly id="serialIn"></textarea>
-				<label>Command In</label>
-				<textarea readonly id="cmdIn"></textarea>
-			</div>
-		</div>
-		<div>
-			<button id="clear">Clear</button>
-			
-			<div>
-				<button id="enable">Enable</button>
-				<div>
-					<button id="control">Control</button>
-					<label>Continuous Control</label>
-					<input type="checkbox" id="continuous_control">
+				<div class="innerContainer">
+					<div>
+						<label>Serial In</label>
+					</div>
+					<div class="serialIn">
+						<textarea readonly id="serialIn"></textarea>
+					</div>
+					<div>
+						<label>Command In</label>
+					</div>
+					<div>
+						<textarea readonly id="cmdIn"></textarea>
+					</div>
+					<div>
+						<button id="clear">Clear</button>
+					</div>
+				</div>
+
+				<div class="innerContainer">
+					<div>
+						<button id="enable">Enable</button>
+					</div>
+					<div>
+						<button id="control">Control</button>
+						<label>Continuous Control</label>
+						<input type="checkbox" id="continuous_control" />
+					</div>
 					<div>
 						<label>Brake Control</label>
 						<input
@@ -83,15 +100,23 @@
 					</div>
 					<div>
 						<label>Data Length</label>
-						<input type="range" id="data_length" min="1" max="3" value="3" oninput="data_length_callback(this.value)">
+						<input
+							type="range"
+							id="data_length"
+							min="1"
+							max="3"
+							value="3"
+							oninput="data_length_callback(this.value)"
+						/>
 						<label id="data_length_label">3</label>
 					</div>
+				</div>
+			</div>
 
-				</div>	
-		</div>
-		<div>
-			<label>Terminal</label>
-			<textarea readonly id="terminal"></textarea>
+			<div class="terminal">
+				<label>Terminal</label>
+				<textarea readonly id="terminal"></textarea>
+			</div>
 		</div>
 	</body>
 </html>
