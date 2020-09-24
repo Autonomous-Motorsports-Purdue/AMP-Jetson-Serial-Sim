@@ -1,13 +1,14 @@
 {
-	"name": "electron-serialport-quick-start",
+	"name": "AMP_Jetson_Serial_Simulator",
 	"version": "1.0.0",
-	"description": "A minimal Electron application with node serialport",
+	"description": "Serial simulation for mimicking the behavior of the arduino to jetson communication",
 	"main": "main.js",
 	"scripts": {
 		"start": "electron .",
 		"prepare": "electron-build-env npm rebuild",
 		"devStart": "nodemon --watch * --exec electron .",
-		"package": "electron-packager ./ jetson-sim-app --platform=win32 --overwrite --prune=true --out=release-builds"
+		"package": "electron-packager ./ jetson-sim-app --platform=win32 --overwrite --prune=true --out=release-builds",
+		"make-installer": "make-installer.js"
 	},
 	"repository": "https://github.com/serialport/electron-serialport-quick-start",
 	"keywords": [
@@ -29,6 +30,8 @@
 		"@serialport/repl": "^9.0.1",
 		"data-table": "^2.0.0",
 		"electron-build-env": "^0.2.0",
+		"electron-squirrel-startup": "^1.0.0",
+		"electron-winstaller": "^4.0.1",
 		"jquery": "^3.5.1",
 		"serialport": "^7.1.5"
 	}
