@@ -185,6 +185,7 @@ $('#enable').on('click', function () {
 });
 
 $('#control').on('click', function () {
+	console.log('control clicked');
 	let control = 'default';
 
 	const data_len = $('#data_length').val();
