@@ -22,12 +22,10 @@
 			<button id="flush">Flush</button>
 
 			<div class="colContainer">
-				<div class="serialOutput">
-					<div>
-						<label>Serial Output</label>
-					</div>
+				<div class="leftCol">
+					<label>Serial Output</label>
 
-					<textarea id="serialOut"></textarea>
+					<textarea id="leftCol"></textarea>
 
 					<div>
 						<button id="send">Send</button>
@@ -35,25 +33,19 @@
 					</div>
 				</div>
 
-				<div class="innerContainer">
-					<div>
-						<label>Serial In</label>
-					</div>
+				<div class="middleCol">
+					<label>Serial In</label>
 
 					<textarea readonly id="serialIn"></textarea>
 
-					<div>
-						<label>Command In</label>
-					</div>
+					<label>Command In</label>
 
 					<textarea readonly id="cmdIn"></textarea>
 
-					<div>
-						<button id="clear">Clear</button>
-					</div>
+					<button id="clear">Clear</button>
 				</div>
 
-				<div class="innerContainer">
+				<div class="rightCol">
 					<div>
 						<button id="enable">Enable</button>
 					</div>
@@ -111,6 +103,10 @@
 						<label id="data_length_label">3</label>
 					</div>
 				</div>
+			</div>
+			<div class="terminal">
+				<label>Terminal</label>
+				<textarea id="terminal"></textarea>
 			</div>
 		</div>
 		<script>

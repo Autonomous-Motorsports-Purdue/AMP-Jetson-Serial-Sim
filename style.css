@@ -27,42 +27,33 @@ textarea {
 	margin: 0;
 }
 
-.innerContainer {
+.middleCol {
 	display: block;
-}
-
-.innerContainer textarea {
-	box-sizing: border-box;
-	width: 100%;
-}
-
-.serialOutput {
-	margin: 0 0 0 0;
-	padding: 0px;
-	border: 0px solid #cdd2d8;
-	width: 100%;
 	height: 100%;
-	overflow: auto;
-	float: left;
+	padding: 0;
 }
 
-.serialOutput textarea {
+.middleCol textarea {
 	box-sizing: border-box;
-	height: 80%;
 	width: 100%;
+	height: 9.25rem;
 }
 
-.serialOutput {
-	flex-grow: 1;
-	resize: none;
+.leftCol {
+	display: block;
+	height: 100%;
+	padding: 0;
 }
 
-.serialIn {
-	height: 50%;
+.leftCol textarea {
+	box-sizing: border-box;
+	height: 20rem;
+	width: 100%;
 }
 
 .terminal textarea {
 	width: 100%;
+	height: 5rem;
 	box-sizing: border-box;
 	resize: none;
 }
