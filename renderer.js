@@ -5,7 +5,7 @@
 // const port = new SerialPort('/dev/ttyS6');
 
 const SerialPort = require('serialport');
-const port = new SerialPort('COM6', { autoOpen: false });
+let port = new SerialPort('COM6', { autoOpen: false });
 const ByteLength = require('@serialport/parser-byte-length');
 const parser = port.pipe(new ByteLength({ length: 1 }));
 const serial = require('./serial.js');
@@ -16,6 +16,12 @@ const SerialPkt = require('./serialpkt');
 const pkt = new SerialPkt.SerialPkt();
 
 let update; //control update var
+
+SerialPort.list().then((ports) => {
+	document.getElementById('port-list').innerHTML = `${ports
+		.map((port) => `<option value=${port.comName}>${port.comName}</option>`)
+		.join('')}`;
+});
 
 function serialBuilder() {
 	let builder = SerialPkt.serial_start;
@@ -103,6 +109,10 @@ parser.on('data', function (data) {
 });
 
 $('#connect').on('click', function () {
+	port = new SerialPort($('#port-list :selected').text(), {
+		autoOpen: false,
+	});
+
 	if (port.isOpen) {
 		console.log('Port is already open');
 	} else {
