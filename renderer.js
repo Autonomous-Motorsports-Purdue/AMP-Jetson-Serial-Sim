@@ -243,7 +243,11 @@ function continousControl() {
 $('#continuous_control').on('click', function () {
 	if ($(this).prop('checked')) {
 		continousControl();
-		update = setInterval(continousControl, 500);
+
+		let period = $('#control-freq').val();
+		period = 1000 / period;
+
+		update = setInterval(continousControl, period);
 	} else {
 		clearInterval(update);
 	}
@@ -271,3 +275,7 @@ function consoleLogOverride() {
 		logger.scrollTop(logger[0].scrollHeight);
 	};
 }
+
+$('#control-freq').on('input', function () {
+	// Print entered value in a div box
+});

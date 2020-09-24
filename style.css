@@ -58,6 +58,10 @@ textarea {
 	text-align: left;
 }
 
+.freq {
+	width: 5rem;
+}
+
 .terminal textarea {
 	width: 100%;
 	height: 5rem;
