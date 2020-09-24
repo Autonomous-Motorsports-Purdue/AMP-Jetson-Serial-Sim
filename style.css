@@ -22,7 +22,7 @@ textarea {
 
 .colContainer {
 	display: grid;
-	grid-template-columns: 33% 33% 33%;
+	grid-template-columns: 25% 40% 35%;
 	padding: 0;
 	margin: 0;
 }

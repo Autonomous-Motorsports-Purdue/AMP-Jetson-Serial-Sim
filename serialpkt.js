@@ -21,7 +21,7 @@ function SerialPkt() {
 	this.stop = false;
 
 	this.reset = function () {
-		console.log('reset parser vars');
+		// console.log('reset parser vars');
 		this.start = false;
 		this.id = null;
 		this.data_len = null;

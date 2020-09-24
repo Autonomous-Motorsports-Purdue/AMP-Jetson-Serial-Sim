@@ -7,7 +7,7 @@
 const SerialPort = require('serialport');
 let port = new SerialPort('COM6', { autoOpen: false });
 const ByteLength = require('@serialport/parser-byte-length');
-const parser = port.pipe(new ByteLength({ length: 1 }));
+let parser = port.pipe(new ByteLength({ length: 1 }));
 const serial = require('./serial.js');
 
 const $ = require('jQuery');
@@ -17,11 +17,30 @@ const pkt = new SerialPkt.SerialPkt();
 
 let update; //control update var
 
-SerialPort.list().then((ports) => {
-	document.getElementById('port-list').innerHTML = `${ports
-		.map((port) => `<option value=${port.comName}>${port.comName}</option>`)
-		.join('')}`;
-});
+consoleLogOverride();
+
+refreshCallback();
+
+function refreshCallback() {
+	SerialPort.list().then((ports) => {
+		document.getElementById('port-list').innerHTML = `${ports
+			.map((port) => `<option value=${port.comName}>${port.comName}</option>`)
+			.join('')}`;
+	});
+
+	$('#disconnect').trigger('click');
+
+	updateInterface(true);
+}
+
+function updateInterface(isDisabled) {
+	$('#send').prop('disabled', isDisabled);
+	$('#flush').prop('disabled', isDisabled);
+	$('#continuous_control').prop('disabled', isDisabled);
+	$('#serialIn').prop('disabled', isDisabled);
+	$('#cmdIn').prop('disabled', isDisabled);
+	$('#clear').prop('disabled', isDisabled);
+}
 
 function serialBuilder() {
 	let builder = SerialPkt.serial_start;
@@ -80,38 +99,42 @@ function numToHexStr(num) {
 	return hex;
 }
 
-$('document').ready(function () {
-	$('#send').prop('disabled', true);
-	$('#flush').prop('disabled', true);
-	$('#continuous_control').prop('disabled', true);
-	$('#serialIn').prop('disabled', true);
-	$('#cmdIn').prop('disabled', true);
-	$('#clear').prop('disabled', true);
-});
-
-parser.on('data', function (data) {
+function onDataCallback(data) {
 	//echo back
 	// console.log(`> ${data.toString('hex')}`);
+	const sIn = $('#serialIn');
+	const cmdIn = $('#cmdIn');
 
-	$('#serialIn').val($('#serialIn').val() + data.toString('hex'));
+	sIn.val(sIn.val() + data.toString('hex'));
 
 	pkt.addbyte(data.toString('hex'));
 
-	$('#cmdIn').val($('#cmdIn').val() + pkt.getParsedPkt());
+	cmdIn.val(cmdIn.val() + pkt.getParsedPkt());
 
 	if (serial.stop.equals(data)) {
 		console.log('stop');
-		// socket.emit('serialIn_linebreak');
+		sIn.val(sIn.val() + '\n');
+		cmdIn.val(cmdIn.val() + '\n');
 	}
 
-	$('#serialIn').scrollTop($('#serialIn')[0].scrollHeight);
-	$('#cmdIn').scrollTop($('#cmdIn')[0].scrollHeight);
+	sIn.scrollTop(sIn[0].scrollHeight);
+	cmdIn.scrollTop(cmdIn[0].scrollHeight);
+}
+
+$('#refresh').on('click', function () {
+	console.log('refresh ports');
+	refreshCallback();
 });
 
 $('#connect').on('click', function () {
+	console.log('connect requested');
 	port = new SerialPort($('#port-list :selected').text(), {
 		autoOpen: false,
 	});
+
+	parser = port.pipe(new ByteLength({ length: 1 }));
+
+	parser.on('data', onDataCallback);
 
 	if (port.isOpen) {
 		console.log('Port is already open');
@@ -120,12 +143,8 @@ $('#connect').on('click', function () {
 			if (err) {
 				return console.log(`Error opening port: ${err.message}`);
 			} else {
-				$('#send').prop('disabled', false);
-				$('#flush').prop('disabled', false);
-				$('#serialIn').prop('disabled', false);
-				$('#cmdIn').prop('disabled', false);
-				$('#clear').prop('disabled', false);
-				$('#continuous_control').prop('disabled', false);
+				updateInterface(false);
+
 				return console.log('port opened');
 			}
 		});
@@ -138,12 +157,8 @@ $('#disconnect').on('click', function () {
 			if (err) {
 				return console.log(`Error closing port: ${err.message}`);
 			} else {
-				$('#send').prop('disabled', true);
-				$('#flush').prop('disabled', true);
-				$('#continuous_control').prop('disabled', true);
-				$('#serialIn').prop('disabled', true);
-				$('#cmdIn').prop('disabled', true);
-				$('#clear').prop('disabled', true);
+				updateInterface(true);
+
 				console.log('Port Disconected');
 			}
 		});
@@ -240,3 +255,21 @@ $('#clear').on('click', function () {
 	$('#serialIn').val('');
 	$('#cmdIn').val('');
 });
+
+function consoleLogOverride() {
+	const old = console.log;
+	const logger = $('#terminal');
+	console.log = function (message) {
+		old(message);
+		if (typeof message == 'object') {
+			logger.val(
+				logger.val() + JSON && JSON.stringify
+					? JSON.stringify(message)
+					: message + '\n'
+			);
+		} else {
+			logger.val(logger.val() + message + '\n');
+		}
+		logger.scrollTop(logger[0].scrollHeight);
+	};
+}
