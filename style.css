@@ -31,6 +31,11 @@ textarea {
 	display: block;
 }
 
+.innerContainer textarea {
+	box-sizing: border-box;
+	width: 100%;
+}
+
 .serialOutput {
 	margin: 0 0 0 0;
 	padding: 0px;
@@ -39,6 +44,12 @@ textarea {
 	height: 100%;
 	overflow: auto;
 	float: left;
+}
+
+.serialOutput textarea {
+	box-sizing: border-box;
+	height: 80%;
+	width: 100%;
 }
 
 .serialOutput {
