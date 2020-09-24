@@ -112,7 +112,6 @@ function onDataCallback(data) {
 	cmdIn.val(cmdIn.val() + pkt.getParsedPkt());
 
 	if (serial.stop.equals(data)) {
-		console.log('stop');
 		sIn.val(sIn.val() + '\n');
 		cmdIn.val(cmdIn.val() + '\n');
 	}
@@ -172,7 +171,7 @@ $('#send').on('click', function () {
 	if (str == '') {
 		return;
 	}
-	console.log(`Requested Send: ${str}`);
+	// console.log(`Requested Send: ${str}`);
 	if (port.isOpen) {
 		port.write(Buffer.from(str, 'hex'));
 	} else {
@@ -200,7 +199,6 @@ $('#enable').on('click', function () {
 });
 
 $('#control').on('click', function () {
-	console.log('control clicked');
 	let control = 'default';
 
 	const data_len = $('#data_length').val();
