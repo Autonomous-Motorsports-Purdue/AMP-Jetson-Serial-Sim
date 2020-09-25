@@ -12,15 +12,17 @@
 		<title>Jetson Serial Simulator</title>
 	</head>
 	<body>
-		<h1>Jetson UART Simulator</h1>
-		<div>
-			<select id="port-list"></select>
-			<button id="refresh">Refresh</button>
-		</div>
+		
 		<div class="container">
-			<button id="connect">Connect</button>
-			<button id="disconnect">Disconnect</button>
-			<button id="flush">Flush</button>
+			<div>
+				<select id="port-list"></select>
+				<button id="refresh">Refresh</button>
+			</div>
+			<div>
+				<button id="connect">Connect</button>
+				<button id="disconnect">Disconnect</button>
+				<button id="flush">Flush</button>
+			</div>
 
 			<div class="colContainer">
 				<div class="leftCol">
@@ -61,6 +63,7 @@
 
 					<input
 						type="range"
+						class="slider"
 						id="brake"
 						min="0"
 						max="255"
@@ -73,6 +76,7 @@
 
 					<input
 						type="range"
+						class="slider"
 						id="throttle"
 						min="0"
 						max="255"
@@ -84,6 +88,7 @@
 					<label>Steering Control</label>
 					<input
 						type="range"
+						class="slider"
 						id="steering"
 						min="0"
 						max="255"
@@ -95,6 +100,7 @@
 					<label>Data Length</label>
 					<input
 						type="range"
+						class="slider"
 						id="data_length"
 						min="1"
 						max="3"
