@@ -1,8 +1,6 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-// const SerialPort = require('serialport');
-// const port = new SerialPort('/dev/ttyS6');
 
 const SerialPort = require('serialport');
 let port = new SerialPort('COM6', { autoOpen: false });

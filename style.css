@@ -3,7 +3,7 @@
 	--base-color-light: #d7e0ec;
 	--base-color-dark: #093e83;
 	--base-background-color: #acacac;
-	--base-background-color-dark: #acacac;
+	--base-background-color-dark: #858383;
 	--base-background-color-light: #e0e0e0;
 }
 
@@ -46,6 +46,13 @@ body button:active {
 body::-webkit-scrollbar {
 	width: 0.25rem;
 }
+body::-webkit-scrollbar-thumb {
+	background: var(--base-color);
+}
+
+body::-webkit-scrollbar-track {
+	background: var(--base-color-dark);
+}
 
 canvas {
 	display: block;
@@ -55,10 +62,15 @@ canvas {
 
 textarea {
 	height: 10rem;
+	background: var(--base-background-color-light);
+}
+
+input {
+	background: var(--base-background-color-light);
 }
 
 textarea:disabled {
-	background: var(--base-background-color-light);
+	background: var(--base-background-color-dark);
 }
 
 .container {
