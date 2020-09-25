@@ -1,27 +1,26 @@
-// C:\Users\sdkca\Desktop\electron-workspace\build.js
-var electronInstaller = require('electron-winstaller');
+const createWindowsInstaller = require('electron-winstaller')
+	.createWindowsInstaller;
+const path = require('path');
 
-// In this case, we can use relative paths
-var settings = {
-	// Specify the folder where the built app is located
-	appDirectory: './release-builds/jetson-sim-app-win32-x64',
-	// Specify the existing folder where
-	outputDirectory: './jetson-sim-win-installer',
-	// The name of the Author of the app (the name of your company)
-	authors: 'Mitch Arndt',
-	// The name of the executable of your built
-	exe: './jetson-sim-app.exe',
-};
+getInstallerConfig()
+	.then(createWindowsInstaller)
+	.catch((error) => {
+		console.error(error.message || error);
+		process.exit(1);
+	});
 
-resultPromise = electronInstaller.createWindowsInstaller(settings);
+function getInstallerConfig() {
+	console.log('creating windows installer');
+	const rootPath = path.join('./');
+	const outPath = path.join(rootPath, 'release-builds');
 
-resultPromise.then(
-	() => {
-		console.log(
-			'The installers of your application were succesfully created !'
-		);
-	},
-	(e) => {
-		console.log(`Well, sometimes you are not so lucky: ${e.message}`);
-	}
-);
+	return Promise.resolve({
+		appDirectory: path.join(outPath, 'jetson-sim-app-win32-x64/'),
+		authors: 'Mitch Arndt',
+		noMsi: true,
+		outputDirectory: path.join(outPath, 'windows-installer'),
+		exe: 'jetson-sim-app.exe',
+		setupExe: 'AMPJetsonSimInstaller.exe',
+		// setupIcon: path.join(rootPath, 'assets', 'icons', 'win', 'icon.ico'),
+	});
+}

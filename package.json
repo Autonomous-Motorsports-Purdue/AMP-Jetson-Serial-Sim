@@ -8,7 +8,7 @@
 		"prepare": "electron-build-env npm rebuild",
 		"devStart": "nodemon --watch * --exec electron .",
 		"package": "electron-packager ./ jetson-sim-app --platform=win32 --overwrite --prune=true --out=release-builds",
-		"make-installer": "make-installer.js"
+		"create-installer": "node make-installer.js"
 	},
 	"repository": "https://github.com/serialport/electron-serialport-quick-start",
 	"keywords": [
@@ -24,6 +24,7 @@
 		"electron": "^5.0.13",
 		"electron-packager": "^15.1.0",
 		"electron-rebuild": "^2.0.3",
+		"electron-winstaller": "^4.0.1",
 		"nodemon": "^2.0.4"
 	},
 	"dependencies": {
@@ -31,7 +32,6 @@
 		"data-table": "^2.0.0",
 		"electron-build-env": "^0.2.0",
 		"electron-squirrel-startup": "^1.0.0",
-		"electron-winstaller": "^4.0.1",
 		"jquery": "^3.5.1",
 		"npm": "^6.14.8",
 		"serialport": "^7.1.5"
