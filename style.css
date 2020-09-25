@@ -2,6 +2,9 @@
 	--base-color: #3576cc;
 	--base-color-light: #d7e0ec;
 	--base-color-dark: #093e83;
+	--base-background-color: #acacac;
+	--base-background-color-dark: #acacac;
+	--base-background-color-light: #e0e0e0;
 }
 
 html,
@@ -9,6 +12,16 @@ body {
 	margin: 0 0;
 	text-align: center;
 	align-content: center;
+	background: var(--base-background-color);
+}
+
+hr {
+	border: 0;
+	clear: both;
+	display: block;
+	width: 85%;
+	background-color: var(--base-color);
+	height: 1px;
 }
 
 body button {
@@ -44,11 +57,16 @@ textarea {
 	height: 10rem;
 }
 
+textarea:disabled {
+	background: var(--base-background-color-light);
+}
+
 .container {
 	display: flex;
 	flex-flow: column;
 	height: 100%;
 	margin-top: 1rem;
+	margin-bottom: 0;
 }
 
 .container div {
@@ -91,6 +109,7 @@ textarea {
 	justify-content: space-between;
 	text-align: left;
 	width: 100%;
+	align-items: center;
 }
 
 /* Mouse-over effects */
