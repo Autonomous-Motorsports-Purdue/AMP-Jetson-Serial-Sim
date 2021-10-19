@@ -2,6 +2,9 @@
 
 ## Electron based serial simulator for testing serial communication between the Jetson and Arduino MCU
 
+## Video Demonstration
+[![Demo Video](https://img.youtube.com/vi/daYhBjnEbTU/0.jpg)](https://www.youtube.com/watch?v=daYhBjnEbTU)
+
 ### Description
 The simulator uses the Electron Javascript Environment to create a standalone Windows application.  The two main operations for the simulator after connecting to the microcontroller through serial are the Enable and Control modes.  The two buttons in the top right will load the corresponding command into the Serial Output buffer, shown on the left side of the screen.  Once the command is loaded, it can then be sent out to the microcontroller device by pressing the Send button underneath the Serial Output terminal.  
 
