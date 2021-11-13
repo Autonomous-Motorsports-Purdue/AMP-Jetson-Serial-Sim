@@ -1,10 +1,5 @@
 # AMP Jetson Serial Simulator
 
-## Electron based serial simulator for testing serial communication between the Jetson and Arduino MCU
-
-## Video Demonstration
-[![Demo Video](https://img.youtube.com/vi/daYhBjnEbTU/0.jpg)](https://www.youtube.com/watch?v=daYhBjnEbTU)
-
 
 ### Fraser's Fixes
 NodeJS version was newer than what this was origininally built for, and they patched 'security issues' with regards to renderer.js . Renderer originally had access to require() and a lot of other nice things, but in the current version the access is restricted. Code originally moved to preload.js which has full access which renderer had.
