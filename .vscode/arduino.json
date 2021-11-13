@@ -1,6 +1,6 @@
 {
     "programmer": "AVR ISP",
-    "board": "arduino:avr:uno",
-    "port": "COM6",
+    "board": "arduino:sam:arduino_due_x",
+    "port": "/dev/cu.usbmodem14101",
     "sketch": "ArduinoEchoback\\ArduinoEchoback.ino"
 }

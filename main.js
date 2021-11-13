@@ -7,6 +7,7 @@ if (setupEvents.handleSquirrelEvent()) {
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron');
+const Renderer = require('electron/renderer');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -19,6 +20,7 @@ function createWindow() {
 		height: 690,
 		webPreferences: {
 			nodeIntegration: true,
+			preload: "preload.js",
 		},
 		autoHideMenuBar: true,
 	});

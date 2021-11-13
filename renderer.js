@@ -2,16 +2,6 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const SerialPort = require('serialport');
-let port = new SerialPort('COM6', { autoOpen: false });
-const ByteLength = require('@serialport/parser-byte-length');
-let parser = port.pipe(new ByteLength({ length: 1 }));
-const serial = require('./serial.js');
-
-const $ = require('jQuery');
-
-const SerialPkt = require('./serialpkt');
-const pkt = new SerialPkt.SerialPkt();
 
 let update; //control update var
 
@@ -20,9 +10,14 @@ consoleLogOverride();
 refreshCallback();
 
 function refreshCallback() {
+
+	console.log("so we're here :)");
+	console.log("port should be open: " + port.baudRate + " " + port.usbPortName);
+
 	SerialPort.list().then((ports) => {
 		document.getElementById('port-list').innerHTML = `${ports
-			.map((port) => `<option value=${port.comName}>${port.comName}</option>`)
+			// locationID changed from comName
+			.map((port) => `<option value=${port.locationId}>${port.locationId}</option>`)
 			.join('')}`;
 	});
 
@@ -32,6 +27,9 @@ function refreshCallback() {
 }
 
 function updateInterface(isDisabled) {
+
+	console.log("or here?");
+	
 	$('#send').prop('disabled', isDisabled);
 	$('#flush').prop('disabled', isDisabled);
 	$('#continuous_control').prop('disabled', isDisabled);
@@ -41,6 +39,9 @@ function updateInterface(isDisabled) {
 }
 
 function serialBuilder() {
+
+	console.log("serial builder");
+
 	let builder = SerialPkt.serial_start;
 	let crc = parseInt(SerialPkt.serial_start);
 
@@ -58,6 +59,8 @@ function serialBuilder() {
 const serial_enable_str = serialBuilder(SerialPkt.serial_id_enable);
 
 function numToHexStr(num) {
+
+	console("num to hex");
 	let hex = num.toString(16);
 
 	if (hex.length > 2) {
@@ -99,7 +102,7 @@ function numToHexStr(num) {
 
 function onDataCallback(data) {
 	//echo back
-	// console.log(`> ${data.toString('hex')}`);
+	console.log(`> ${data.toString('hex')}`);
 	const sIn = $('#serialIn');
 	const cmdIn = $('#cmdIn');
 

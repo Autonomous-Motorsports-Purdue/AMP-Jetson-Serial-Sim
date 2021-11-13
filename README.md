@@ -5,6 +5,10 @@
 ## Video Demonstration
 [![Demo Video](https://img.youtube.com/vi/daYhBjnEbTU/0.jpg)](https://www.youtube.com/watch?v=daYhBjnEbTU)
 
+
+### Fraser's Fixes
+NodeJS version was newer than what this was origininally built for, and they patched 'security issues' with regards to renderer.js . Renderer originally had access to require() and a lot of other nice things, but in the current version the access is restricted. Code originally moved to preload.js which has full access which renderer had.
+
 ### Description
 The simulator uses the Electron Javascript Environment to create a standalone Windows application.  The two main operations for the simulator after connecting to the microcontroller through serial are the Enable and Control modes.  The two buttons in the top right will load the corresponding command into the Serial Output buffer, shown on the left side of the screen.  Once the command is loaded, it can then be sent out to the microcontroller device by pressing the Send button underneath the Serial Output terminal.  
 
